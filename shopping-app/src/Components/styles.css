@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;900&family=Varela+Round&display=swap');
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
     font-family: "Montserrat", sans-serif;
@@ -18,7 +23,7 @@ label {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 5px 5%;
+    padding: 20px 5%;
     background-color: #1a1a40;
     position: relative;
 }
@@ -69,4 +74,8 @@ a:hover {
 .btn_register:hover {
     background-color: #ffadf0;
     color: #fbf8f1;
+}
+
+.h_products {
+    padding: 10px;
 }

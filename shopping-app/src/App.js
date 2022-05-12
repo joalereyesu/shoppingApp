@@ -1,10 +1,9 @@
-import ShopNavbar from "./Components/ShopNavbar";
+import ProductCatalog from "./Components/ProductCatalog";
+// import ShopNavbar from "./Components/ShopNavbar";
 
 function App() {
   return (
-    <ShopNavbar>
-
-    </ShopNavbar>
+    <ProductCatalog></ProductCatalog>
   );
 }
 

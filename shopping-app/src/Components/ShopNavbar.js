@@ -1,21 +1,44 @@
 import { Component } from 'react';
-import './styles.css'
-// import { Link, useLocation } from 'react-router-dom';
+import { Navbar, Nav, NavDropdown, Container, Button } from 'react-bootstrap'
+import axios from 'axios';
 
 class ShopNavbar extends Component {
+    constructor() {
+        super()
+        this.state = { categories: [], error: '' }
+    }
+
+    fetch = async () => {
+        try {
+            const response = await axios.get('https://dummyjson.com/products/categories');
+            console.log(response.data)
+            this.setState({ categories: response.data })
+        }
+        catch (error) {
+            this.setState({ error: error })
+        }
+    }
+
+    componentDidMount() {
+        this.fetch();
+    };
+
     render() {
         return (
-            <div className='nav_card'>
-                <h1 className='logo' alt='logo'>Shopping App</h1>
-                <nav>
-                    <ul className='nav_links'>
-                        <li><a key='concerts' href='/'>Home</a></li>
-                        <li><a key='experience' href='/categories'>Categories</a></li>
-                        <li><a key='profile' href='/products'>Products</a></li>
-                    </ul>
-                </nav>
-                <a href='/cart'><button className='btn_register'>Shopping Cart</button></a>
-            </div>
+            <Navbar bg="dark" variant="dark">
+                <Container>
+                    <Navbar.Brand href="/">Shopping App</Navbar.Brand>
+                    <Nav className="me-auto">
+                        <Nav.Link href="/">Home</Nav.Link>
+                        <NavDropdown title="Categories" id="navbarScrollingDropdown">
+                            {this.state.categories.map((category) => (
+                                <NavDropdown.Item href={category}>{category.charAt(0).toUpperCase() + category.slice(1)}</NavDropdown.Item>
+                            ))}
+                        </NavDropdown>
+                    </Nav>
+                    <Button variant="outline-light" href='/cart'>Go to cart</Button>
+                </Container>
+            </Navbar>
         );
     }
 }

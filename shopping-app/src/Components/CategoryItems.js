@@ -8,7 +8,7 @@ export default function CategoryItems() {
 
     return (
         <Container>
-            <ProductCatalog category={categoryName} />
+            <ProductCatalog category={categoryName} handleAddToCart={this.props.handleAddToCart} />
         </Container>
     )
 }

@@ -7,6 +7,7 @@ import {
   Routes,
   BrowserRouter,
 } from "react-router-dom";
+import Cart from "./Cart";
 
 class App extends Component {
   constructor() {
@@ -17,19 +18,33 @@ class App extends Component {
     }
   }
 
-  handleAddToCart = (index) => {
-
+  handleAddToCart = (product) => {
+    const products = [...this.state.cartProducts];
+    products.push(product);
+    const price = product.price;
+    this.setState(
+      {
+        cartProducts: products,
+        total: this.state.total + price
+      }
+    )
   }
 
   render() {
+    console.log(this.state.cartProducts);
     return (
       <BrowserRouter>
         <ShopNavbar />
         <Routes>
-          <Route path='/' element={<ProductCatalog />} />
-          <Route path=':categoryName' element={<CategoryItems />} />
-          <Route path='products' />
-          <Route path='cart' />
+          <Route
+            path='/'
+            element={<ProductCatalog handleAddToCart={this.handleAddToCart} />}
+          />
+          <Route
+            path=':categoryName'
+            element={<CategoryItems />} />
+          <Route path='cart'
+            element={<Cart cartProducts={this.state.cartProducts} total={this.state.total} />} />
         </Routes>
       </BrowserRouter>
     );

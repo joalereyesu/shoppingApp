@@ -1,9 +1,10 @@
 import React from 'react';
-import { Navbar, Nav, NavDropdown, Container, Button, Modal, ListGroup, Badge, CloseButton } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, Container, Button, Modal, ListGroup, Badge, CloseButton, Alert } from 'react-bootstrap'
 
 
 function MyVerticallyCenteredModal(props) {
-    console.log(props.data);
+    let alert = props.posted === 1 ? <Alert variant='success'>The order was set! Thank you for your purchase.</Alert> : <Button onClick={props.handlePostCart}>Proceed to checkout</Button>
+    console.log(props.posted)
     return (
         < Modal
             {...props}
@@ -37,7 +38,7 @@ function MyVerticallyCenteredModal(props) {
                 <h4 className='text-left p-2'>Cart total: ${props.total}.00</h4>
             </Modal.Body>
             <Modal.Footer>
-                <Button>Proceed to checkout</Button>
+                {alert}
             </Modal.Footer>
         </Modal >
     );
@@ -70,6 +71,8 @@ export default function ShopNavbar(props) {
                 data={props.products}
                 total={props.total}
                 handleDelete={props.handleDelete}
+                handlePostCart={props.handlePostCart}
+                posted={props.posted}
             />
         </>
     );

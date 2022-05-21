@@ -8,7 +8,7 @@ import {
   Routes,
   BrowserRouter,
 } from "react-router-dom";
-import SignUp from "./Components/SignUp";
+// import SignUp from "./Components/SignUp";
 
 class App extends Component {
   constructor() {
@@ -17,7 +17,8 @@ class App extends Component {
       cartProducts: [],
       total: 0,
       categories: [],
-      error: ''
+      error: '',
+      posted: 0
     }
   }
 
@@ -49,6 +50,50 @@ class App extends Component {
     )
   }
 
+  handlePostCart = async () => {
+    try {
+      const response = await axios.post('https://dummyjson.com/carts/add',
+        {
+          userId: 1,
+          products: this.state.cartProducts,
+          total: this.state.total
+
+        });
+      console.log(response);
+      this.setState({ posted: 1 });
+      console.log(this.state.posted);
+    }
+    catch (error) {
+      this.setState({ error: error })
+    }
+    // this.setState({ posted: 1 });
+    // console.log(this.state.posted);
+    // axios.post('https://dummyjson.com/carts/add',
+    //   {
+    //     userId: 1,
+    //     products: this.state.cartProducts,
+    //     total: this.state.total
+
+    //   })
+    //   .then(function (response) {
+    //     console.log(response)
+    //   })
+    // fetch('https://dummyjson.com/carts/add', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({
+    //     userId: 1,
+    //     products: this.state.cartProducts,
+    //     total: this.state.total
+    //   })
+    // })
+    //   .then((res) =>
+    //     res.json(),
+    //     this.setState({ posted: 1 }))
+    //   .then(console.log);
+    // console.log(this.state.posted);
+  }
+
   handleDelete = (index) => {
     const products = [...this.state.cartProducts];
     const selected = products[index];
@@ -61,16 +106,16 @@ class App extends Component {
     return (
 
       <BrowserRouter>
-        <ShopNavbar categories={this.state.categories} products={this.state.cartProducts} total={this.state.total} handleDelete={this.handleDelete} />
+        <ShopNavbar categories={this.state.categories} products={this.state.cartProducts} total={this.state.total} handleDelete={this.handleDelete} handlePostCart={this.handlePostCart} posted={this.state.posted} />
         <Routes>
           <Route
             path='/'
             element={<ProductCatalog handleAddToCart={this.handleAddToCart} />}
           />
-          <Route
+          {/* <Route
             path='/signup'
             element={<SignUp />}>
-          </Route>
+          </Route> */}
           <Route
             path=':categoryName'
             element={<CategoryItems />} />
